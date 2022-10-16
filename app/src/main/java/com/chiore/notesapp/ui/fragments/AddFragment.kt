@@ -22,6 +22,54 @@ class AddFragment : Fragment(R.layout.fragment_add) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        colorChoose()
+
+    }
+
+    private fun colorChoose() {
+        binding.apply {
+            blueDot.setOnClickListener {
+                blueDot.setImageResource(R.drawable.ic_done)
+                noteEt.setBackgroundResource(R.drawable.edit_txt_background_blue)
+                yellowDot.setImageResource(0)
+                redDot.setImageResource(0)
+                tealDot.setImageResource(0)
+                purpleDot.setImageResource(0)
+            }
+            yellowDot.setOnClickListener {
+                yellowDot.setImageResource(R.drawable.ic_done)
+                noteEt.setBackgroundResource(R.drawable.edit_txt_background_yellow)
+                blueDot.setImageResource(0)
+                redDot.setImageResource(0)
+                tealDot.setImageResource(0)
+                purpleDot.setImageResource(0)
+            }
+            redDot.setOnClickListener {
+                redDot.setImageResource(R.drawable.ic_done)
+                noteEt.setBackgroundResource(R.drawable.edit_txt_background_red)
+                blueDot.setImageResource(0)
+                yellowDot.setImageResource(0)
+                tealDot.setImageResource(0)
+                purpleDot.setImageResource(0)
+            }
+            tealDot.setOnClickListener {
+                tealDot.setImageResource(R.drawable.ic_done)
+                noteEt.setBackgroundResource(R.drawable.edit_txt_background_teal)
+                yellowDot.setImageResource(0)
+                blueDot.setImageResource(0)
+                redDot.setImageResource(0)
+                purpleDot.setImageResource(0)
+            }
+            purpleDot.setOnClickListener {
+                purpleDot.setImageResource(R.drawable.ic_done)
+                noteEt.setBackgroundResource(R.drawable.edit_txt_background_purple)
+                tealDot.setImageResource(0)
+                yellowDot.setImageResource(0)
+                blueDot.setImageResource(0)
+                redDot.setImageResource(0)
+            }
+        }
     }
 
 }
