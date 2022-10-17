@@ -1,7 +1,6 @@
 package com.chiore.notesapp.ui.fragments
 
 import android.Manifest
-import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -57,17 +56,32 @@ class AddFragment : Fragment(R.layout.fragment_add) {
     }
 
     private fun registerLauncher() {
-
         activityResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == RESULT_OK) {
                     val intentFromResult = result.data
-                    if (intentFromResult != null) {
+                    intentFromResult?.let {
                         selectedImage = intentFromResult.data
-                        selectedImage?.let {
-                            binding.addFragmentIv.visibility = View.VISIBLE
-                            binding.addFragmentIv.setImageURI(it)
-                            // bitmapa cevirmek ucun 367 10:40
+                        try {
+                            selectedImage?.let {
+                                if (Build.VERSION.SDK_INT < 28) {
+                                    selectedBitmap = MediaStore.Images.Media.getBitmap(
+                                        requireActivity().contentResolver,
+                                        selectedImage
+                                    )
+                                    binding.addFragmentIv.visibility = View.VISIBLE
+                                    binding.addFragmentIv.setImageBitmap(selectedBitmap)
+                                } else {
+                                    val source =
+                                        ImageDecoder.createSource(requireActivity().contentResolver,
+                                            selectedImage!!)
+                                    selectedBitmap = ImageDecoder.decodeBitmap(source)
+                                    binding.addFragmentIv.visibility = View.VISIBLE
+                                    binding.addFragmentIv.setImageBitmap(selectedBitmap)
+                                }
+                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
                         }
                     }
                 }
@@ -154,5 +168,18 @@ class AddFragment : Fragment(R.layout.fragment_add) {
             }
         }
     }
+
+    //                    if (intentFromResult != null) {
+//                        selectedImage = intentFromResult.data
+//                        selectedImage?.let {
+//                            val bitmap =
+//                                MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, it)
+//
+//                            binding.addFragmentIv.visibility = View.VISIBLE
+//                            binding.addFragmentIv.setImageBitmap(bitmap)
+////                            binding.addFragmentIv.setImageURI(it)
+//                            // bitmapa cevirmek ucun 367 10:40
+//                        }
+//                    }
 
 }
