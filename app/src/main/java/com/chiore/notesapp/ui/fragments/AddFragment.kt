@@ -19,13 +19,18 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.chiore.noteapp.R
 import com.chiore.noteapp.databinding.FragmentAddBinding
+import com.chiore.notesapp.model.Notes
+import com.chiore.notesapp.viewmodel.NotesViewModel
 import com.google.android.material.snackbar.Snackbar
 
 class AddFragment : Fragment(R.layout.fragment_add) {
 
     private lateinit var binding: FragmentAddBinding
+    var colors: Int = 0
+    val viewModel: NotesViewModel by viewModels()
 
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var permissionLAuncher: ActivityResultLauncher<String>
@@ -53,6 +58,30 @@ class AddFragment : Fragment(R.layout.fragment_add) {
 
         registerLauncher()
 
+        binding.saveFab.setOnClickListener {
+            createNotes(it)
+        }
+
+    }
+
+    private fun createNotes(view: View) {
+        binding.apply {
+            val title = titleEt.text.toString()
+            val note = noteEt.text.toString()
+
+            val data = Notes(
+                null,
+                title = title,
+                notes = note,
+                colors = colors
+            )
+
+            viewModel.addNotes(data)
+
+            Toast.makeText(
+                requireContext(), "Notes created succssfully", Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
     private fun registerLauncher() {
@@ -127,6 +156,7 @@ class AddFragment : Fragment(R.layout.fragment_add) {
     private fun colorChoose() {
         binding.apply {
             blueDot.setOnClickListener {
+                colors = 1
                 blueDot.setImageResource(R.drawable.ic_done)
                 noteEt.setBackgroundResource(R.drawable.edit_txt_background_blue)
                 yellowDot.setImageResource(0)
@@ -135,6 +165,7 @@ class AddFragment : Fragment(R.layout.fragment_add) {
                 purpleDot.setImageResource(0)
             }
             yellowDot.setOnClickListener {
+                colors = 2
                 yellowDot.setImageResource(R.drawable.ic_done)
                 noteEt.setBackgroundResource(R.drawable.edit_txt_background_yellow)
                 blueDot.setImageResource(0)
@@ -143,6 +174,7 @@ class AddFragment : Fragment(R.layout.fragment_add) {
                 purpleDot.setImageResource(0)
             }
             redDot.setOnClickListener {
+                colors = 3
                 redDot.setImageResource(R.drawable.ic_done)
                 noteEt.setBackgroundResource(R.drawable.edit_txt_background_red)
                 blueDot.setImageResource(0)
@@ -151,6 +183,7 @@ class AddFragment : Fragment(R.layout.fragment_add) {
                 purpleDot.setImageResource(0)
             }
             tealDot.setOnClickListener {
+                colors = 4
                 tealDot.setImageResource(R.drawable.ic_done)
                 noteEt.setBackgroundResource(R.drawable.edit_txt_background_teal)
                 yellowDot.setImageResource(0)
@@ -159,6 +192,7 @@ class AddFragment : Fragment(R.layout.fragment_add) {
                 purpleDot.setImageResource(0)
             }
             purpleDot.setOnClickListener {
+                colors = 5
                 purpleDot.setImageResource(R.drawable.ic_done)
                 noteEt.setBackgroundResource(R.drawable.edit_txt_background_purple)
                 tealDot.setImageResource(0)

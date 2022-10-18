@@ -61,10 +61,10 @@
                 android:background="@drawable/edit_txt_background"
                 android:fontFamily="@font/gilroy_light"
                 android:hint="Note"
-                android:textAlignment="center"
+                android:gravity="start"
                 android:textSize="24sp"
                 android:padding="8dp"
-                android:textColor="@color/txt_color"
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/titleEt"
@@ -141,7 +141,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/bottomLineView" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/homeFab"
+                android:id="@+id/saveFab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="28dp"
