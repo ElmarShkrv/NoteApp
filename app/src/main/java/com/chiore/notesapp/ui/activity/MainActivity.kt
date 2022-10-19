@@ -5,7 +5,9 @@ import android.os.Bundle
 import androidx.navigation.findNavController
 import com.chiore.noteapp.R
 import com.chiore.noteapp.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     val binding by lazy {

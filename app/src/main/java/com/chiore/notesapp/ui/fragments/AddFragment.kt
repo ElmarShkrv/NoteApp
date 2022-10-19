@@ -20,12 +20,15 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.chiore.noteapp.R
 import com.chiore.noteapp.databinding.FragmentAddBinding
-import com.chiore.notesapp.model.Notes
+import com.chiore.notesapp.data.model.Notes
 import com.chiore.notesapp.viewmodel.NotesViewModel
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AddFragment : Fragment(R.layout.fragment_add) {
 
     private lateinit var binding: FragmentAddBinding
@@ -61,7 +64,6 @@ class AddFragment : Fragment(R.layout.fragment_add) {
         binding.saveFab.setOnClickListener {
             createNotes(it)
         }
-
     }
 
     private fun createNotes(view: View) {
@@ -69,18 +71,15 @@ class AddFragment : Fragment(R.layout.fragment_add) {
             val title = titleEt.text.toString()
             val note = noteEt.text.toString()
 
-            val data = Notes(
-                null,
-                title = title,
-                notes = note,
-                colors = colors
-            )
+            val data = Notes(null, title, note, colors)
 
             viewModel.addNotes(data)
 
             Toast.makeText(
                 requireContext(), "Notes created succssfully", Toast.LENGTH_SHORT
             ).show()
+
+            findNavController().navigate(R.id.action_addFragment_to_homeFragment)
         }
     }
 

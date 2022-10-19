@@ -1,4 +1,4 @@
-package com.chiore.notesapp.model
+package com.chiore.notesapp.data.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

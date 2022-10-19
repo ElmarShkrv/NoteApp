@@ -1,29 +1,29 @@
 package com.chiore.notesapp.viewmodel
 
-import android.app.Application
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.chiore.notesapp.database.NotesDatabase
-import com.chiore.notesapp.model.Notes
+import androidx.lifecycle.viewModelScope
+import com.chiore.notesapp.data.model.Notes
 import com.chiore.notesapp.repository.NotesRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class NotesViewModel(application: Application) : ViewModel() {
+@HiltViewModel
+class NotesViewModel @Inject constructor(
+    private val repository: NotesRepository,
+) : ViewModel() {
 
-    val repository: NotesRepository
 
-    init {
-        val dao = NotesDatabase.getDatabaseInstance(application).myNotesDao()
-        repository = NotesRepository(dao)
-    }
-
-    fun addNotes(notes: Notes) {
+    fun addNotes(notes: Notes) = viewModelScope.launch {
         repository.insertNote(notes)
     }
 
-    fun deleteNote(notes: Notes) {
+    fun deleteNote(notes: Notes) = viewModelScope.launch {
         repository.deleteNote(notes)
     }
 
-    fun getNotes(): LiveData<List<Notes>> = repository.getAllNotes()
+    fun getNotes() = repository.getAllNotes()
 
 }

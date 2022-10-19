@@ -1,21 +1,24 @@
 package com.chiore.notesapp.repository
 
 import androidx.lifecycle.LiveData
-import com.chiore.notesapp.dao.NotesDao
-import com.chiore.notesapp.model.Notes
+import com.chiore.notesapp.data.dao.NotesDao
+import com.chiore.notesapp.data.model.Notes
+import javax.inject.Inject
 
-class NotesRepository(val dao: NotesDao) {
+class NotesRepository @Inject constructor(
+    private val notesDao: NotesDao,
+) {
 
     fun getAllNotes(): LiveData<List<Notes>> {
-        return dao.getAllNotes()
+        return notesDao.getAllNotes()
     }
 
-    fun insertNote(notes: Notes) {
-        return dao.insertNotes(notes)
+    suspend fun insertNote(notes: Notes) {
+        return notesDao.insertNotes(notes)
     }
 
-    fun deleteNote(notes: Notes) {
-        return dao.deleteNote(notes)
+    suspend fun deleteNote(notes: Notes) {
+        return notesDao.deleteNote(notes)
     }
 
 }
