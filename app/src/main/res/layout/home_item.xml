@@ -28,7 +28,10 @@
             android:id="@+id/titleTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp"
             android:text="Title"
             android:textColor="@color/black"
             android:fontFamily="@font/gilroy_extra_blod" />
@@ -39,8 +42,8 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="4dp"
             android:layout_marginBottom="4dp" />
 
