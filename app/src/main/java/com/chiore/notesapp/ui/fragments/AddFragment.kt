@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.database.CursorWindow
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
@@ -27,6 +28,7 @@ import com.chiore.notesapp.data.model.Notes
 import com.chiore.notesapp.viewmodel.NotesViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.reflect.Field
 
 @AndroidEntryPoint
 class AddFragment : Fragment(R.layout.fragment_add) {
