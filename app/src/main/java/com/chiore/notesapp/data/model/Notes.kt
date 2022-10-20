@@ -1,5 +1,6 @@
 package com.chiore.notesapp.data.model
 
+import android.graphics.Bitmap
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -10,4 +11,5 @@ data class Notes(
     var title: String,
     var notes: String,
     var colors: Int,
+    var noteImage: Bitmap? = null
 )

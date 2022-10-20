@@ -1,10 +1,12 @@
 package com.chiore.notesapp.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.chiore.noteapp.R
 import com.chiore.noteapp.databinding.HomeItemBinding
 import com.chiore.notesapp.data.model.Notes
@@ -19,6 +21,11 @@ class HomeFragmentRvAdapter() :
             with(binding) {
                 titleTv.text = notes.title
                 noteTv.text = notes.notes
+
+                if (notes.noteImage != null) {
+                    homeRvItemIv.visibility = View.VISIBLE
+                    Glide.with(root).load(notes.noteImage).into(homeRvItemIv)
+                }
 
 
                 when (notes.colors) {
@@ -38,7 +45,7 @@ class HomeFragmentRvAdapter() :
                         homeItemLinear.setBackgroundResource(R.color.crane_purple)
                     }
                     else -> {
-                        homeItemLinear.setBackgroundResource(0)
+                        homeItemLinear.setBackgroundResource(R.color.txt_color)
                     }
                 }
 

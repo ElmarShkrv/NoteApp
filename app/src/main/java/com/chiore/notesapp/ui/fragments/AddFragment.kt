@@ -68,16 +68,25 @@ class AddFragment : Fragment(R.layout.fragment_add) {
 
     private fun createNotes(view: View) {
         binding.apply {
-            val title = titleEt.text.toString()
-            val note = noteEt.text.toString()
+            if (titleEt.text.isNotEmpty() || noteEt.text.isNotEmpty()) {
+                val title = titleEt.text.toString().trim()
+                val note = noteEt.text.toString().trim()
 
-            val data = Notes(null, title, note, colors)
-
-            viewModel.addNotes(data)
-
-            Toast.makeText(
-                requireContext(), "Notes created succssfully", Toast.LENGTH_SHORT
-            ).show()
+                if (selectedBitmap != null) {
+                    val data = Notes(null, title, note, colors, selectedBitmap)
+                    viewModel.addNotes(data)
+                } else {
+                    val data = Notes(null, title, note, colors, null)
+                    viewModel.addNotes(data)
+                }
+                Toast.makeText(
+                    requireContext(), "Notes created succssfully", Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                Toast.makeText(
+                    requireContext(), "Make sure the title and note are not empty", Toast.LENGTH_SHORT
+                ).show()
+            }
 
             findNavController().navigate(R.id.action_addFragment_to_homeFragment)
         }
