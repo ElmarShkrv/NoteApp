@@ -68,7 +68,7 @@ class AddFragment : Fragment(R.layout.fragment_add) {
 
     private fun createNotes(view: View) {
         binding.apply {
-            if (titleEt.text.isNotEmpty() || noteEt.text.isNotEmpty()) {
+            if (titleEt.text.isNotEmpty() && noteEt.text.isNotEmpty()) {
                 val title = titleEt.text.toString().trim()
                 val note = noteEt.text.toString().trim()
 
@@ -82,13 +82,12 @@ class AddFragment : Fragment(R.layout.fragment_add) {
                 Toast.makeText(
                     requireContext(), "Notes created succssfully", Toast.LENGTH_SHORT
                 ).show()
+                findNavController().navigate(R.id.action_addFragment_to_homeFragment)
             } else {
                 Toast.makeText(
                     requireContext(), "Make sure the title and note are not empty", Toast.LENGTH_SHORT
                 ).show()
             }
-
-            findNavController().navigate(R.id.action_addFragment_to_homeFragment)
         }
     }
 
