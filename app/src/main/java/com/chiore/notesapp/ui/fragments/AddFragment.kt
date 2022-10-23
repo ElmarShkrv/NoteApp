@@ -20,7 +20,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavArgs
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
@@ -72,9 +71,7 @@ class AddFragment : Fragment(R.layout.fragment_add) {
                 }
             } else {
                 setupUiForEdit()
-
                 addImageIv.setOnClickListener {
-                    selectedBitmap?.recycle()
                     selectImage(it)
                 }
 
@@ -143,7 +140,6 @@ class AddFragment : Fragment(R.layout.fragment_add) {
                     }
 
                 }
-
                 saveEditedNote()
 
             }
@@ -191,7 +187,6 @@ class AddFragment : Fragment(R.layout.fragment_add) {
     }
 
 
-
     private fun createNotes(view: View) {
         binding.apply {
             if (titleEt.text.isNotEmpty() && noteEt.text.isNotEmpty()) {
@@ -229,7 +224,6 @@ class AddFragment : Fragment(R.layout.fragment_add) {
                         try {
                             selectedImage?.let {
                                 if (Build.VERSION.SDK_INT < 28) {
-//                                    selectedBitmap?.recycle()
                                     selectedBitmap = MediaStore.Images.Media.getBitmap(
                                         requireActivity().contentResolver,
                                         selectedImage
@@ -241,7 +235,6 @@ class AddFragment : Fragment(R.layout.fragment_add) {
                                     val source =
                                         ImageDecoder.createSource(requireActivity().contentResolver,
                                             selectedImage!!)
-//                                    selectedBitmap?.recycle()
                                     selectedBitmap = ImageDecoder.decodeBitmap(source)
                                     binding.addFragmentIv.visibility = View.VISIBLE
                                     binding.addFragmentIv.setImageBitmap(selectedBitmap)
@@ -340,23 +333,5 @@ class AddFragment : Fragment(R.layout.fragment_add) {
             }
         }
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        selectedBitmap?.recycle()
-    }
-
-    //                    if (intentFromResult != null) {
-//                        selectedImage = intentFromResult.data
-//                        selectedImage?.let {
-//                            val bitmap =
-//                                MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, it)
-//
-//                            binding.addFragmentIv.visibility = View.VISIBLE
-//                            binding.addFragmentIv.setImageBitmap(bitmap)
-////                            binding.addFragmentIv.setImageURI(it)
-//                            // bitmapa cevirmek ucun 367 10:40
-//                        }
-//                    }
 
 }

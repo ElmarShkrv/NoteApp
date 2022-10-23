@@ -58,6 +58,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     }
 
+
     private fun setupHomeRv() {
         homeFragmentRvAdapter = HomeFragmentRvAdapter()
         binding.apply {

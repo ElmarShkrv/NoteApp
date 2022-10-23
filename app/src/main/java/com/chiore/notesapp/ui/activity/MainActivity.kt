@@ -2,6 +2,7 @@ package com.chiore.notesapp.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
 import androidx.navigation.findNavController
 import com.chiore.noteapp.R
 import com.chiore.noteapp.databinding.ActivityMainBinding
@@ -18,7 +19,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-//        val navController = findNavController(R.id.)
+    }
 
+    override fun onSaveInstanceState(InstanceState: Bundle) {
+        super.onSaveInstanceState(InstanceState)
+        InstanceState.clear()
     }
 }
