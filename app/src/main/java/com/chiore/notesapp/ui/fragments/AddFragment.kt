@@ -20,7 +20,10 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavArgs
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.chiore.noteapp.R
 import com.chiore.noteapp.databinding.FragmentAddBinding
 import com.chiore.notesapp.data.model.Notes
@@ -34,6 +37,7 @@ class AddFragment : Fragment(R.layout.fragment_add) {
     private lateinit var binding: FragmentAddBinding
     var colors: Int = 0
     val viewModel: NotesViewModel by viewModels()
+    val args: AddFragmentArgs by navArgs()
 
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var permissionLAuncher: ActivityResultLauncher<String>
@@ -53,18 +57,140 @@ class AddFragment : Fragment(R.layout.fragment_add) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        colorChoose()
+        binding.apply {
 
-        binding.addImageIv.setOnClickListener {
-            selectImage(it)
-        }
+            colorChoose()
 
-        registerLauncher()
+            registerLauncher()
 
-        binding.saveFab.setOnClickListener {
-            createNotes(it)
+            if (args.currentData == null) {
+                saveFab.setOnClickListener {
+                    createNotes(it)
+                }
+                addImageIv.setOnClickListener {
+                    selectImage(it)
+                }
+            } else {
+                setupUiForEdit()
+
+                addImageIv.setOnClickListener {
+                    selectedBitmap?.recycle()
+                    selectImage(it)
+                }
+
+            }
+
         }
     }
+
+    private fun setupUiForEdit() {
+        binding.apply {
+            val currentData = args.currentData
+
+            currentData?.let {
+
+                titleEt.setText(currentData.title)
+                noteEt.setText(currentData.notes)
+
+                if (currentData.noteImage != null) {
+                    addFragmentIv.visibility = View.VISIBLE
+                    Glide.with(root).load(currentData.noteImage).into(addFragmentIv)
+                }
+
+                when (currentData.colors) {
+                    1 -> {
+                        blueDot.setImageResource(R.drawable.ic_done)
+                        noteEt.setBackgroundResource(R.drawable.edit_txt_background_blue)
+                        yellowDot.setImageResource(0)
+                        redDot.setImageResource(0)
+                        tealDot.setImageResource(0)
+                        purpleDot.setImageResource(0)
+                    }
+                    2 -> {
+                        yellowDot.setImageResource(R.drawable.ic_done)
+                        noteEt.setBackgroundResource(R.drawable.edit_txt_background_yellow)
+                        blueDot.setImageResource(0)
+                        redDot.setImageResource(0)
+                        tealDot.setImageResource(0)
+                        purpleDot.setImageResource(0)
+                    }
+                    3 -> {
+                        redDot.setImageResource(R.drawable.ic_done)
+                        noteEt.setBackgroundResource(R.drawable.edit_txt_background_red)
+                        blueDot.setImageResource(0)
+                        yellowDot.setImageResource(0)
+                        tealDot.setImageResource(0)
+                        purpleDot.setImageResource(0)
+                    }
+                    4 -> {
+                        tealDot.setImageResource(R.drawable.ic_done)
+                        noteEt.setBackgroundResource(R.drawable.edit_txt_background_teal)
+                        yellowDot.setImageResource(0)
+                        blueDot.setImageResource(0)
+                        redDot.setImageResource(0)
+                        purpleDot.setImageResource(0)
+                    }
+                    5 -> {
+                        purpleDot.setImageResource(R.drawable.ic_done)
+                        noteEt.setBackgroundResource(R.drawable.edit_txt_background_purple)
+                        tealDot.setImageResource(0)
+                        yellowDot.setImageResource(0)
+                        blueDot.setImageResource(0)
+                        redDot.setImageResource(0)
+                    }
+                    else -> {
+                        noteEt.setBackgroundResource(R.color.txt_color)
+                    }
+
+                }
+
+                saveEditedNote()
+
+            }
+        }
+    }
+
+    private fun saveEditedNote() {
+        binding.apply {
+            saveFab.setOnClickListener {
+                val currentData = args.currentData
+                val currentImage: Bitmap?
+                currentData?.let {
+                    currentImage = selectedBitmap
+//                    if (currentData.noteImage != null) {
+//                        currentImage = currentData.noteImage
+//                    } else {
+//                        currentImage = selectedBitmap
+//                    }
+
+                    if (titleEt.text.isNotEmpty() && noteEt.text.isNotEmpty()) {
+                        val title = titleEt.text.toString().trim()
+                        val note = noteEt.text.toString().trim()
+                        val color = colors
+
+                        val noteData = Notes(currentData.id, title, note, color, currentImage)
+
+                        viewModel.addNotes(noteData)
+
+                        Toast.makeText(
+                            requireContext(), "Notes created succssfully", Toast.LENGTH_SHORT
+                        ).show()
+
+                        findNavController().navigate(R.id.action_addFragment_to_homeFragment)
+
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            "Make sure the title and note are not empty",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+        }
+    }
+
+
 
     private fun createNotes(view: View) {
         binding.apply {
@@ -85,7 +211,9 @@ class AddFragment : Fragment(R.layout.fragment_add) {
                 findNavController().navigate(R.id.action_addFragment_to_homeFragment)
             } else {
                 Toast.makeText(
-                    requireContext(), "Make sure the title and note are not empty", Toast.LENGTH_SHORT
+                    requireContext(),
+                    "Make sure the title and note are not empty",
+                    Toast.LENGTH_SHORT
                 ).show()
             }
         }
@@ -101,16 +229,19 @@ class AddFragment : Fragment(R.layout.fragment_add) {
                         try {
                             selectedImage?.let {
                                 if (Build.VERSION.SDK_INT < 28) {
+//                                    selectedBitmap?.recycle()
                                     selectedBitmap = MediaStore.Images.Media.getBitmap(
                                         requireActivity().contentResolver,
                                         selectedImage
                                     )
                                     binding.addFragmentIv.visibility = View.VISIBLE
                                     binding.addFragmentIv.setImageBitmap(selectedBitmap)
+
                                 } else {
                                     val source =
                                         ImageDecoder.createSource(requireActivity().contentResolver,
                                             selectedImage!!)
+//                                    selectedBitmap?.recycle()
                                     selectedBitmap = ImageDecoder.decodeBitmap(source)
                                     binding.addFragmentIv.visibility = View.VISIBLE
                                     binding.addFragmentIv.setImageBitmap(selectedBitmap)
@@ -208,6 +339,11 @@ class AddFragment : Fragment(R.layout.fragment_add) {
                 redDot.setImageResource(0)
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        selectedBitmap?.recycle()
     }
 
     //                    if (intentFromResult != null) {

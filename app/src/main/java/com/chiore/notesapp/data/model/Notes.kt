@@ -3,7 +3,10 @@ package com.chiore.notesapp.data.model
 import android.graphics.Bitmap
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 @Entity(tableName = "Notes")
 data class Notes(
     @PrimaryKey(autoGenerate = true)
@@ -12,4 +15,4 @@ data class Notes(
     var notes: String,
     var colors: Int,
     var noteImage: Bitmap? = null
-)
+): Parcelable

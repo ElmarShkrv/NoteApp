@@ -3,6 +3,7 @@ package com.chiore.notesapp.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -10,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.chiore.noteapp.R
 import com.chiore.noteapp.databinding.HomeItemBinding
 import com.chiore.notesapp.data.model.Notes
+import com.chiore.notesapp.ui.fragments.HomeFragmentDirections
 
 class HomeFragmentRvAdapter() :
     ListAdapter<Notes, HomeFragmentRvAdapter.HomeViewHolder>(DiffUtilCallBack()) {
@@ -47,6 +49,12 @@ class HomeFragmentRvAdapter() :
                     else -> {
                         homeItemLinear.setBackgroundResource(R.color.txt_color)
                     }
+                }
+
+                itemView.setOnClickListener { view ->
+                    val action = HomeFragmentDirections
+                        .actionHomeFragmentToAddFragment(notes)
+                    Navigation.findNavController(view).navigate(action)
                 }
 
             }

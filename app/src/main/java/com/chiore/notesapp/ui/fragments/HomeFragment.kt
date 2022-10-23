@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.chiore.noteapp.R
 import com.chiore.noteapp.databinding.FragmentHomeBinding
@@ -35,7 +36,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.homeFab.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_addFragment)
+            val action = HomeFragmentDirections
+                .actionHomeFragmentToAddFragment(null)
+            Navigation.findNavController(it).navigate(action)
         }
 
         getNotes()

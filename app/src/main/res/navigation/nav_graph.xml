@@ -22,5 +22,9 @@
         <action
             android:id="@+id/action_addFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <argument
+            android:name="currentData"
+            app:argType="com.chiore.notesapp.data.model.Notes"
+            app:nullable="true" />
     </fragment>
 </navigation>
