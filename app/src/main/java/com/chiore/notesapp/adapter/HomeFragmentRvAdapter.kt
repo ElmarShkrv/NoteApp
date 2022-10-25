@@ -1,5 +1,7 @@
 package com.chiore.notesapp.adapter
 
+import android.app.AlertDialog
+import android.icu.text.Transliterator.Position
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +14,8 @@ import com.chiore.noteapp.R
 import com.chiore.noteapp.databinding.HomeItemBinding
 import com.chiore.notesapp.data.model.Notes
 import com.chiore.notesapp.ui.fragments.HomeFragmentDirections
+import com.chiore.notesapp.viewmodel.NotesViewModel
+import kotlinx.coroutines.coroutineScope
 
 class HomeFragmentRvAdapter() :
     ListAdapter<Notes, HomeFragmentRvAdapter.HomeViewHolder>(DiffUtilCallBack()) {
@@ -29,6 +33,7 @@ class HomeFragmentRvAdapter() :
                     Glide.with(root).load(notes.noteImage).into(homeRvItemIv)
                 }
 
+                adapterPosition
 
                 when (notes.colors) {
                     1 -> {
@@ -56,7 +61,6 @@ class HomeFragmentRvAdapter() :
                         .actionHomeFragmentToAddFragment(notes)
                     Navigation.findNavController(view).navigate(action)
                 }
-
             }
         }
 

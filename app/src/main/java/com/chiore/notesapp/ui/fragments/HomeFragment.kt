@@ -9,10 +9,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.chiore.noteapp.R
 import com.chiore.noteapp.databinding.FragmentHomeBinding
 import com.chiore.notesapp.adapter.HomeFragmentRvAdapter
 import com.chiore.notesapp.viewmodel.NotesViewModel
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.reflect.Field
 
@@ -26,7 +29,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentHomeBinding.inflate(inflater)
         return binding.root
@@ -56,6 +59,38 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             e.printStackTrace()
         }
 
+        deleteItem()
+
+    }
+
+    private fun deleteItem() {
+        val itemTouchHelper = object : ItemTouchHelper.SimpleCallback(
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+            ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder,
+            ) = true
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.layoutPosition
+
+                val deleteNote = homeFragmentRvAdapter.currentList[position]
+                val insertNote = homeFragmentRvAdapter.currentList[position]
+
+                viewModel.deleteNote(deleteNote)
+
+                Snackbar.make(requireView(), "Movie deleted", Snackbar.LENGTH_LONG).setAction(
+                    "Undo",
+                    View.OnClickListener {
+                        viewModel.addNotes(insertNote)
+                    }
+                ).show()
+            }
+        }
+        ItemTouchHelper(itemTouchHelper).attachToRecyclerView(binding.homeNotesRv)
     }
 
 
