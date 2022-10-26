@@ -77,6 +77,16 @@ class HomeFragmentRvAdapter() :
     override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
         val result = getItem(position)
         holder.bind(result)
+
+        holder.binding.deleteTest.setOnClickListener {
+            onItemClickListener?.let { it(position) }
+        }
+    }
+
+    private var onItemClickListener: ((Int) -> Unit)? = null
+
+    fun setOnItemClickListener(listener: (Int) -> Unit) {
+        onItemClickListener = listener
     }
 
     class DiffUtilCallBack : DiffUtil.ItemCallback<Notes>() {

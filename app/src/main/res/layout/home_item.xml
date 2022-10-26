@@ -49,4 +49,17 @@
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
+    <Button
+        android:id="@+id/deleteTest"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="del"
+        android:background="@drawable/red_dot"
+        android:textSize="20sp"
+        android:fontFamily="@font/gilroy_extra_blod" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
