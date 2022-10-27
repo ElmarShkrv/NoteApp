@@ -8,13 +8,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.RecyclerView
 import com.chiore.noteapp.R
 import com.chiore.noteapp.databinding.FragmentHomeBinding
 import com.chiore.notesapp.adapter.HomeFragmentRvAdapter
-import com.chiore.notesapp.data.model.Notes
+import com.chiore.notesapp.util.DefaultItemDecorator
 import com.chiore.notesapp.viewmodel.NotesViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -85,6 +82,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         homeFragmentRvAdapter = HomeFragmentRvAdapter()
         binding.apply {
             homeNotesRv.adapter = homeFragmentRvAdapter
+            homeNotesRv.addItemDecoration(DefaultItemDecorator(
+                resources.getDimensionPixelSize(R.dimen.horizontal_margin_for_vertical),
+                resources.getDimensionPixelSize(R.dimen.vertical_margin_for_vertical)
+            ))
         }
     }
 

@@ -1,65 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="180dp"
     android:layout_height="wrap_content"
+    android:background="@color/background"
+    android:id="@+id/homeParentLayout"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/homeItemLinear"
-        android:layout_width="180dp"
+    <ImageView
+        android:id="@+id/homeRvItemIv"
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        android:layout_margin="4dp"
+        android:visibility="gone"
+        android:src="@drawable/testimage"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/titleTv"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="8dp"
-        android:background="@color/background"
+        android:text="Title"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/gilroy_extra_blod"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toStartOf="@+id/deleteNote"
+        app:layout_constraintTop_toBottomOf="@+id/homeRvItemIv"/>
 
-        <ImageView
-            android:id="@+id/homeRvItemIv"
-            android:layout_width="match_parent"
-            android:layout_height="260dp"
-            android:layout_margin="4dp"
-            android:visibility="gone"
-            android:src="@drawable/testimage"
-            android:scaleType="centerCrop" />
+    <ImageView
+        android:id="@+id/deleteNote"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_delete"
+        android:layout_marginEnd="4dp"
+        app:layout_constraintTop_toTopOf="@+id/titleTv"
+        app:layout_constraintBottom_toBottomOf="@+id/titleTv"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-        <TextView
-            android:id="@+id/titleTv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginBottom="4dp"
-            android:text="Title"
-            android:textColor="@color/black"
-            android:fontFamily="@font/gilroy_extra_blod" />
-
-        <TextView
-            android:id="@+id/noteTv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginBottom="4dp" />
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <Button
-        android:id="@+id/deleteTest"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+    <TextView
+        android:id="@+id/noteTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
+        android:layout_margin="4dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleTv"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:text="del"
-        android:background="@drawable/red_dot"
-        android:textSize="20sp"
-        android:fontFamily="@font/gilroy_extra_blod" />
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

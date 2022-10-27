@@ -1,7 +1,6 @@
 package com.chiore.notesapp.adapter
 
-import android.app.AlertDialog
-import android.icu.text.Transliterator.Position
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +13,6 @@ import com.chiore.noteapp.R
 import com.chiore.noteapp.databinding.HomeItemBinding
 import com.chiore.notesapp.data.model.Notes
 import com.chiore.notesapp.ui.fragments.HomeFragmentDirections
-import com.chiore.notesapp.viewmodel.NotesViewModel
-import kotlinx.coroutines.coroutineScope
 
 class HomeFragmentRvAdapter() :
     ListAdapter<Notes, HomeFragmentRvAdapter.HomeViewHolder>(DiffUtilCallBack()) {
@@ -37,22 +34,22 @@ class HomeFragmentRvAdapter() :
 
                 when (notes.colors) {
                     1 -> {
-                        homeItemLinear.setBackgroundResource(R.color.blue)
+                        homeParentLayout.setBackgroundResource(R.color.blue)
                     }
                     2 -> {
-                        homeItemLinear.setBackgroundResource(R.color.yellow)
+                        homeParentLayout.setBackgroundResource(R.color.yellow)
                     }
                     3 -> {
-                        homeItemLinear.setBackgroundResource(R.color.crane_red)
+                        homeParentLayout.setBackgroundResource(R.color.crane_red)
                     }
                     4 -> {
-                        homeItemLinear.setBackgroundResource(R.color.teal)
+                        homeParentLayout.setBackgroundResource(R.color.teal)
                     }
                     5 -> {
-                        homeItemLinear.setBackgroundResource(R.color.crane_purple)
+                        homeParentLayout.setBackgroundResource(R.color.crane_purple)
                     }
                     else -> {
-                        homeItemLinear.setBackgroundResource(R.color.txt_color)
+                        homeParentLayout.setBackgroundResource(R.color.txt_color)
                     }
                 }
 
@@ -78,7 +75,7 @@ class HomeFragmentRvAdapter() :
         val result = getItem(position)
         holder.bind(result)
 
-        holder.binding.deleteTest.setOnClickListener {
+        holder.binding.deleteNote.setOnClickListener {
             onItemClickListener?.let { it(position) }
         }
     }

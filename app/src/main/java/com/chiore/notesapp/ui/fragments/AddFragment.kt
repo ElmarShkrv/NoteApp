@@ -58,6 +58,10 @@ class AddFragment : Fragment(R.layout.fragment_add) {
 
         binding.apply {
 
+            addToolbar.setNavigationOnClickListener {
+                requireActivity().onBackPressed()
+            }
+
             colorChoose()
 
             registerLauncher()
