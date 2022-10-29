@@ -88,8 +88,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.apply {
             homeNotesRv.adapter = homeFragmentRvAdapter
             homeNotesRv.addItemDecoration(DefaultItemDecorator(
-                resources.getDimensionPixelSize(R.dimen.horizontal_margin_for_vertical),
-                resources.getDimensionPixelSize(R.dimen.vertical_margin_for_vertical)
+                resources.getDimensionPixelSize(R.dimen.vertical_margin_for_vertical),
+                resources.getDimensionPixelSize(R.dimen.vertical_margin_for_horizontal)
             ))
         }
     }
