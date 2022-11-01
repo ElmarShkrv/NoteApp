@@ -3,4 +3,7 @@
     <dimen name="vertical_margin_for_vertical">4dp</dimen>
     <dimen name="vertical_margin_for_horizontal">8dp</dimen>
 
+    <dimen name="vertical_margin_for_vertical_Search">2dp</dimen>
+    <dimen name="vertical_margin_for_horizontal_Search">2dp</dimen>
+
 </resources>
