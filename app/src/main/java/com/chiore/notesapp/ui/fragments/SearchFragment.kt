@@ -59,7 +59,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         binding.searchEt.addTextChangedListener { editable ->
             job?.cancel()
             job = MainScope().launch {
-//                delay(SEARCH_NEWS_TIME_DELAY)
+                delay(500)
                 editable?.let { query ->
                     if (query.toString().isNotEmpty()) {
                         setSearchList(query)

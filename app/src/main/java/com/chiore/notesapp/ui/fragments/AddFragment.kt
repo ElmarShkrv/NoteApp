@@ -18,6 +18,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -34,13 +35,16 @@ import dagger.hilt.android.AndroidEntryPoint
 class AddFragment : Fragment(R.layout.fragment_add) {
 
     private lateinit var binding: FragmentAddBinding
+
     var colors: Int = 0
+
     val viewModel: NotesViewModel by viewModels()
     val args: AddFragmentArgs by navArgs()
 
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var permissionLAuncher: ActivityResultLauncher<String>
 
+    var currentImage: Bitmap? = null
     var selectedImage: Uri? = null
     var selectedBitmap: Bitmap? = null
 
@@ -75,12 +79,55 @@ class AddFragment : Fragment(R.layout.fragment_add) {
                 }
             } else {
                 setupUiForEdit()
+                saveEditedNote()
+
                 addImageIv.setOnClickListener {
                     selectImage(it)
                 }
 
             }
 
+        }
+    }
+
+    private fun saveEditedNote() {
+
+        binding.apply {
+
+            saveFab.setOnClickListener {
+
+                val currentData = args.currentData
+
+                currentData?.let {
+
+                    if (currentImage == null) {
+                        currentImage = currentData.noteImage
+                    }
+
+                    if (titleEt.text.isNotEmpty() && noteEt.text.isNotEmpty()) {
+                        val title = titleEt.text.toString().trim()
+                        val note = noteEt.text.toString().trim()
+
+                        val noteData = Notes(currentData.id, title, note, colors, currentImage)
+
+                        viewModel.addNotes(noteData)
+
+                        Toast.makeText(
+                            requireContext(), "Notes created succssfully", Toast.LENGTH_SHORT
+                        ).show()
+
+                        findNavController().navigate(R.id.action_addFragment_to_homeFragment)
+
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            "Make sure the title and note are not empty",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                }
+            }
         }
     }
 
@@ -144,48 +191,7 @@ class AddFragment : Fragment(R.layout.fragment_add) {
                     }
 
                 }
-                saveEditedNote()
 
-            }
-        }
-    }
-
-    private fun saveEditedNote() {
-        binding.apply {
-            saveFab.setOnClickListener {
-                val currentData = args.currentData
-                val currentImage: Bitmap?
-                currentData?.let {
-                    currentImage = selectedBitmap
-//                    if (currentData.noteImage != null) {
-//                        currentImage = currentData.noteImage
-//                    } else {
-//                        currentImage = selectedBitmap
-//                    }
-
-                    if (titleEt.text.isNotEmpty() && noteEt.text.isNotEmpty()) {
-                        val title = titleEt.text.toString().trim()
-                        val note = noteEt.text.toString().trim()
-                        val color = colors
-
-                        val noteData = Notes(currentData.id, title, note, color, currentImage)
-
-                        viewModel.addNotes(noteData)
-
-                        Toast.makeText(
-                            requireContext(), "Notes created succssfully", Toast.LENGTH_SHORT
-                        ).show()
-
-                        findNavController().navigate(R.id.action_addFragment_to_homeFragment)
-
-                    } else {
-                        Toast.makeText(
-                            requireContext(),
-                            "Make sure the title and note are not empty",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
             }
         }
     }
@@ -232,6 +238,8 @@ class AddFragment : Fragment(R.layout.fragment_add) {
                                         requireActivity().contentResolver,
                                         selectedImage
                                     )
+                                    currentImage = selectedBitmap
+
                                     binding.addFragmentIv.visibility = View.VISIBLE
                                     binding.addFragmentIv.setImageBitmap(selectedBitmap)
 
@@ -240,6 +248,8 @@ class AddFragment : Fragment(R.layout.fragment_add) {
                                         ImageDecoder.createSource(requireActivity().contentResolver,
                                             selectedImage!!)
                                     selectedBitmap = ImageDecoder.decodeBitmap(source)
+                                    currentImage = selectedBitmap
+
                                     binding.addFragmentIv.visibility = View.VISIBLE
                                     binding.addFragmentIv.setImageBitmap(selectedBitmap)
                                 }

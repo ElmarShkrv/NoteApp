@@ -13,6 +13,7 @@ import com.chiore.noteapp.R
 import com.chiore.noteapp.databinding.HomeItemBinding
 import com.chiore.notesapp.data.model.Notes
 import com.chiore.notesapp.ui.fragments.HomeFragmentDirections
+import com.chiore.notesapp.ui.fragments.SearchFragmentDirections
 
 class SearchFragmentRvAdapter() :
     ListAdapter<Notes, SearchFragmentRvAdapter.SearchViewHolder>(DiffUtilCallBack()) {
@@ -53,11 +54,11 @@ class SearchFragmentRvAdapter() :
                     }
                 }
 
-//                itemView.setOnClickListener { view ->
-//                    val action = HomeFragmentDirections
-//                        .actionHomeFragmentToAddFragment(notes)
-//                    Navigation.findNavController(view).navigate(action)
-//                }
+                itemView.setOnClickListener { view ->
+                    val action = SearchFragmentDirections
+                        .actionSearchFragmentToAddFragment(notes)
+                    Navigation.findNavController(view).navigate(action)
+                }
             }
         }
 
