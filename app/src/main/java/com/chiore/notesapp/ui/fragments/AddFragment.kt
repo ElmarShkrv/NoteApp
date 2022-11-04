@@ -45,6 +45,7 @@ class AddFragment : Fragment(R.layout.fragment_add) {
     private lateinit var permissionLAuncher: ActivityResultLauncher<String>
 
     var currentImage: Bitmap? = null
+    var currentColor: Int = 0
     var selectedImage: Uri? = null
     var selectedBitmap: Bitmap? = null
 
@@ -100,6 +101,12 @@ class AddFragment : Fragment(R.layout.fragment_add) {
 
                 currentData?.let {
 
+                    currentColor = colors
+
+                    if (currentColor == 0) {
+                        currentColor = currentData.colors
+                    }
+
                     if (currentImage == null) {
                         currentImage = currentData.noteImage
                     }
@@ -108,7 +115,7 @@ class AddFragment : Fragment(R.layout.fragment_add) {
                         val title = titleEt.text.toString().trim()
                         val note = noteEt.text.toString().trim()
 
-                        val noteData = Notes(currentData.id, title, note, colors, currentImage)
+                        val noteData = Notes(currentData.id, title, note, currentColor, currentImage)
 
                         viewModel.addNotes(noteData)
 
