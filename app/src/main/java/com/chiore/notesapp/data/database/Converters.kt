@@ -1,4 +1,4 @@
-package com.chiore.notesapp
+package com.chiore.notesapp.data.database
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory

@@ -24,7 +24,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:navigationIcon="@drawable/ic_back"
-                app:title="Add Note"
+                app:title="Note"
                 app:titleTextColor="@color/basil" />
 
             <ImageView

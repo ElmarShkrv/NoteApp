@@ -2,6 +2,7 @@ package com.chiore.notesapp.ui.fragments
 
 import android.Manifest
 import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -27,6 +28,8 @@ import com.bumptech.glide.Glide
 import com.chiore.noteapp.R
 import com.chiore.noteapp.databinding.FragmentAddBinding
 import com.chiore.notesapp.data.model.Notes
+import com.chiore.notesapp.util.longToast
+import com.chiore.notesapp.util.shortToast
 import com.chiore.notesapp.viewmodel.NotesViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -119,18 +122,12 @@ class AddFragment : Fragment(R.layout.fragment_add) {
 
                         viewModel.addNotes(noteData)
 
-                        Toast.makeText(
-                            requireContext(), "Notes created succssfully", Toast.LENGTH_SHORT
-                        ).show()
+                        requireContext().longToast("Notes created succssfully")
 
                         findNavController().navigate(R.id.action_addFragment_to_homeFragment)
 
                     } else {
-                        Toast.makeText(
-                            requireContext(),
-                            "Make sure the title and note are not empty",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        requireContext().longToast("Make sure the title and note are not empty")
                     }
 
                 }
@@ -217,16 +214,10 @@ class AddFragment : Fragment(R.layout.fragment_add) {
                     val data = Notes(null, title, note, colors, null)
                     viewModel.addNotes(data)
                 }
-                Toast.makeText(
-                    requireContext(), "Notes created succssfully", Toast.LENGTH_SHORT
-                ).show()
+                requireContext().shortToast("Notes created succssfully")
                 findNavController().navigate(R.id.action_addFragment_to_homeFragment)
             } else {
-                Toast.makeText(
-                    requireContext(),
-                    "Make sure the title and note are not empty",
-                    Toast.LENGTH_SHORT
-                ).show()
+                requireContext().shortToast("Make sure the title and note are not empty")
             }
         }
     }
@@ -275,7 +266,7 @@ class AddFragment : Fragment(R.layout.fragment_add) {
                         Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                     activityResultLauncher.launch(intentToGallery)
                 } else {
-                    Toast.makeText(requireContext(), "Permission needed!", Toast.LENGTH_LONG).show()
+                    requireContext().longToast("Permission needed!")
                 }
             }
 
