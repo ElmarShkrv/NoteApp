@@ -1,5 +1,5 @@
 # NoteApp
-Notes is a simple project to study and play with some android components, architecture and tools for Android development.
+Notes is a simple project to study some android components, architecture and tools for Android development.
 
 ## Tech Stacks 🛠️
 * MVVM architecture
